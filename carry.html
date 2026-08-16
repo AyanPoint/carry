@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARRY. — Carry your everyday.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F2ECE1;
+  --cream-2:#EAE1D2;
+  --paper:#FBF8F2;
+  --charcoal:#242018;
+  --charcoal-70:rgba(36,32,24,.7);
+  --charcoal-45:rgba(36,32,24,.45);
+  --olive:#6C7350;
+  --olive-dark:#4F5439;
+  --brown:#8A6A4C;
+  --denim:#3D5872;
+  --burgundy:#7C3138;
+  --line:rgba(36,32,24,.14);
+  --radius:2px;
+  --ease:cubic-bezier(.6,0,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--cream);
+  color:var(--charcoal);
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;height:auto;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;background:none;border:none;color:inherit;}
+.serif{font-family:'Fraunces',serif;}
+.eyebrow{
+  font-family:'Space Grotesk',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-size:12px;
+  font-weight:500;
+  color:var(--charcoal-70);
+}
+.wrap{max-width:1320px;margin:0 auto;padding:0 40px;}
+@media(max-width:640px){.wrap{padding:0 20px;}}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:26px 40px;
+  transition:padding .4s var(--ease),background .4s var(--ease),box-shadow .4s var(--ease);
+}
+.nav.scrolled{
+  padding:14px 40px;
+  background:rgba(242,236,225,.88);
+  backdrop-filter:blur(10px);
+  box-shadow:0 1px 0 var(--line);
+}
+.nav-logo{font-family:'Fraunces',serif;font-size:24px;font-weight:600;letter-spacing:-.02em;}
+.nav-center{display:flex;gap:34px;font-size:13.5px;letter-spacing:.02em;}
+.nav-center a{position:relative;padding:4px 0;}
+.nav-center a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--charcoal);transition:width .3s var(--ease);}
+.nav-center a:hover::after{width:100%;}
+.nav-right{display:flex;align-items:center;gap:22px;}
+.nav-icon{width:19px;height:19px;stroke:var(--charcoal);}
+.nav-icon-btn{position:relative;display:flex;}
+.cart-count{
+  position:absolute;top:-7px;right:-9px;
+  background:var(--burgundy);color:var(--paper);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:10px;width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.mobile-toggle{display:none;flex-direction:column;gap:5px;}
+.mobile-toggle span{width:22px;height:1.5px;background:var(--charcoal);}
+@media(max-width:900px){
+  .nav-center{display:none;}
+  .mobile-toggle{display:flex;}
+}
+@media(max-width:640px){
+  .nav,.nav.scrolled{padding:18px 20px;}
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;align-items:flex-end;
+  padding:0 40px 90px;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('images/bag-sunglasses-bottle.jpg');
+  background-size:cover;background-position:center 20%;
+  filter:sepia(.16) saturate(1.05) contrast(1.02);
+}
+.hero-bg::after{content:'';position:absolute;inset:0;}
+.hero-scrim{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(36,32,24,.08) 0%,rgba(36,32,24,.1) 40%,rgba(36,32,24,.62) 100%);
+}
+.hero-inner{position:relative;z-index:2;width:100%;display:flex;justify-content:space-between;align-items:flex-end;gap:40px;}
+.hero-eyebrow{color:rgba(251,248,242,.85);margin-bottom:18px;}
+.hero-title{
+  font-family:'Fraunces',serif;
+  font-weight:500;
+  font-style:italic;
+  color:var(--paper);
+  font-size:clamp(40px,6.2vw,84px);
+  line-height:1.02;
+  letter-spacing:-.01em;
+  max-width:820px;
+}
+.hero-sub{
+  color:rgba(251,248,242,.82);
+  max-width:380px;
+  font-size:15.5px;
+  margin-top:22px;
+  line-height:1.6;
+}
+.hero-ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+.btn{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;
+  padding:16px 30px;
+  border-radius:var(--radius);
+  transition:all .35s var(--ease);
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.btn-solid{background:var(--paper);color:var(--charcoal);}
+.btn-solid:hover{background:var(--olive);color:var(--paper);}
+.btn-outline{border:1px solid rgba(251,248,242,.55);color:var(--paper);}
+.btn-outline:hover{background:rgba(251,248,242,.12);border-color:var(--paper);}
+.btn-dark{background:var(--charcoal);color:var(--paper);}
+.btn-dark:hover{background:var(--olive-dark);}
+.hero-tag{
+  position:relative;z-index:2;
+  writing-mode:vertical-rl;
+  color:rgba(251,248,242,.7);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;
+  display:none;
+}
+@media(min-width:900px){.hero-tag{display:block;}}
+@media(max-width:640px){
+  .hero{padding:0 20px 60px;}
+  .hero-inner{flex-direction:column;align-items:flex-start;}
+}
+
+/* ---------- MARQUEE ---------- */
+.marquee{
+  background:var(--charcoal);color:var(--cream);
+  padding:13px 0;overflow:hidden;white-space:nowrap;
+}
+.marquee-track{display:inline-flex;gap:48px;animation:scroll 28s linear infinite;}
+.marquee span{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;}
+@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ---------- SECTION HEADERS ---------- */
+.section{padding:120px 0;}
+.section-tight{padding:90px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:56px;flex-wrap:wrap;}
+.section-title{
+  font-family:'Fraunces',serif;font-weight:500;
+  font-size:clamp(30px,4vw,52px);
+  letter-spacing:-.01em;line-height:1.05;
+}
+.section-desc{max-width:360px;color:var(--charcoal-70);font-size:14.5px;line-height:1.6;}
+
+/* ---------- PRODUCTS ---------- */
+.product-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  background:var(--line);
+}
+@media(max-width:900px){.product-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.product-grid{grid-template-columns:1fr;}}
+.product-card{
+  background:var(--cream);
+  position:relative;
+  cursor:pointer;
+}
+.product-media{
+  position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--cream-2);
+}
+.product-media img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:opacity .6s var(--ease),transform .8s var(--ease);
+  filter:sepia(.12) saturate(1.05);
+}
+.product-media img.img-b{opacity:0;}
+.product-card:hover .img-a{opacity:0;transform:scale(1.03);}
+.product-card:hover .img-b{opacity:1;transform:scale(1.03);}
+.wishlist{
+  position:absolute;top:14px;right:14px;z-index:3;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(251,248,242,.85);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .3s var(--ease);
+}
+.wishlist:hover{transform:scale(1.1);}
+.wishlist svg{width:15px;height:15px;stroke:var(--charcoal);fill:none;stroke-width:1.4;}
+.wishlist.active svg{fill:var(--burgundy);stroke:var(--burgundy);}
+.quick-add{
+  position:absolute;left:14px;right:14px;bottom:14px;z-index:3;
+  background:var(--paper);color:var(--charcoal);
+  font-family:'Space Grotesk',sans-serif;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:13px;text-align:center;border-radius:var(--radius);
+  opacity:0;transform:translateY(8px);
+  transition:all .35s var(--ease);
+}
+.product-card:hover .quick-add{opacity:1;transform:translateY(0);}
+.product-info{padding:18px 4px 26px;}
+.product-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+.product-name{font-family:'Fraunces',serif;font-size:17px;font-weight:500;}
+.product-price{font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--charcoal-70);}
+.swatches{display:flex;gap:7px;margin-top:11px;}
+.swatch{width:14px;height:14px;border-radius:50%;border:1px solid rgba(36,32,24,.18);cursor:pointer;}
+.swatch.selected{outline:1.5px solid var(--charcoal);outline-offset:2px;}
+
+/* ---------- LIFESTYLE / EDITORIAL ---------- */
+.editorial{background:var(--charcoal);color:var(--cream);padding:130px 0;}
+.editorial .section-title{color:var(--paper);}
+.editorial .eyebrow{color:rgba(242,236,225,.55);}
+.ed-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-auto-rows:110px;
+  gap:14px;margin-top:60px;
+}
+.ed-item{position:relative;overflow:hidden;border-radius:2px;}
+.ed-item img{width:100%;height:100%;object-fit:cover;filter:sepia(.14) saturate(1.05);}
+.ed-item .cap{
+  position:absolute;left:14px;bottom:12px;
+  font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(251,248,242,.9);
+}
+.ed-a{grid-column:1/6;grid-row:1/6;}
+.ed-b{grid-column:6/9;grid-row:1/4;}
+.ed-c{grid-column:9/13;grid-row:1/8;}
+.ed-d{grid-column:6/9;grid-row:4/8;}
+.ed-e{grid-column:1/4;grid-row:6/9;}
+.ed-f{grid-column:4/9;grid-row:8/12;}
+.ed-g{grid-column:9/13;grid-row:8/12;}
+@media(max-width:900px){
+  .ed-grid{grid-template-columns:repeat(6,1fr);grid-auto-rows:150px;}
+  .ed-a{grid-column:1/7;grid-row:1/4;}
+  .ed-b{grid-column:1/4;grid-row:4/7;}
+  .ed-c{grid-column:4/7;grid-row:4/8;}
+  .ed-d{grid-column:1/4;grid-row:7/9;}
+  .ed-e{grid-column:1/7;grid-row:9/12;}
+  .ed-f{grid-column:4/7;grid-row:8/11;display:none;}
+  .ed-g{display:none;}
+}
+
+/* ---------- FEATURES ---------- */
+.features{padding:110px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:60px;}
+@media(max-width:800px){.feature-grid{grid-template-columns:1fr;gap:48px;}}
+.feature-num{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.1em;color:var(--brown);margin-bottom:22px;}
+.feature-title{font-family:'Fraunces',serif;font-size:22px;font-weight:500;margin-bottom:12px;}
+.feature-text{color:var(--charcoal-70);font-size:14.5px;line-height:1.65;max-width:320px;}
+
+/* ---------- WHATS INSIDE ---------- */
+.inside{background:var(--cream-2);padding:130px 0;position:relative;overflow:hidden;}
+.inside-inner{display:flex;flex-direction:column;align-items:center;text-align:center;}
+.inside-title{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:clamp(28px,4vw,46px);max-width:600px;margin:0 auto 70px;}
+.inside-stage{position:relative;width:100%;max-width:880px;aspect-ratio:16/11;margin:0 auto;}
+.bag-photo{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:56%;border-radius:6px;box-shadow:0 40px 80px -30px rgba(36,32,24,.35);
+  filter:sepia(.14) saturate(1.05);
+}
+.inside-item{
+  position:absolute;width:120px;text-align:center;
+}
+.inside-item img{
+  width:76px;height:76px;object-fit:cover;border-radius:50%;
+  border:3px solid var(--paper);box-shadow:0 14px 26px -10px rgba(36,32,24,.3);
+  margin:0 auto 8px;
+}
+.inside-item span{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--charcoal-70);}
+.i1{top:2%;left:6%;}
+.i2{top:0%;left:40%;}
+.i3{top:6%;right:4%;}
+.i4{top:48%;left:0%;}
+.i5{top:44%;right:0%;}
+.i6{bottom:6%;left:10%;}
+.i7{bottom:0%;left:42%;}
+.i8{bottom:8%;right:8%;}
+@media(max-width:900px){
+  .inside-stage{aspect-ratio:auto;height:auto;}
+  .inside-item{position:static;display:inline-flex;flex-direction:column;align-items:center;width:100px;margin:8px;}
+  .inside-items-mobile{display:flex;flex-wrap:wrap;justify-content:center;margin-top:36px;}
+  .bag-photo{position:static;transform:none;width:80%;margin:0 auto;}
+  .i1,.i2,.i3,.i4,.i5,.i6,.i7,.i8{display:none;}
+}
+@media(min-width:901px){.inside-items-mobile{display:none;}}
+
+/* ---------- CAMPUS EDIT ---------- */
+.edit-tabs{display:flex;gap:10px;margin-bottom:0;flex-wrap:wrap;}
+.edit-tab{
+  font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  padding:10px 18px;border:1px solid var(--line);border-radius:20px;color:var(--charcoal-70);
+  transition:all .3s var(--ease);
+}
+.edit-tab.active,.edit-tab:hover{background:var(--charcoal);color:var(--paper);border-color:var(--charcoal);}
+.edit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:44px;background:var(--line);}
+@media(max-width:800px){.edit-grid{grid-template-columns:1fr;}}
+.edit-look{background:var(--cream);position:relative;overflow:hidden;}
+.edit-look img{aspect-ratio:3/4;width:100%;object-fit:cover;filter:sepia(.12) saturate(1.05);transition:transform .7s var(--ease);}
+.edit-look:hover img{transform:scale(1.04);}
+.edit-look-cap{padding:20px 4px;}
+.edit-look-name{font-family:'Fraunces',serif;font-size:18px;font-weight:500;margin-bottom:6px;}
+.edit-look-items{color:var(--charcoal-70);font-size:13px;}
+
+/* ---------- REVIEWS ---------- */
+.reviews{padding:120px 0;}
+.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:56px;}
+@media(max-width:800px){.review-grid{grid-template-columns:1fr;}}
+.review-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:32px;}
+.stars{color:var(--brown);letter-spacing:2px;margin-bottom:18px;font-size:14px;}
+.review-quote{font-family:'Fraunces',serif;font-size:17px;line-height:1.55;font-style:italic;margin-bottom:22px;}
+.review-person{display:flex;align-items:center;gap:12px;}
+.review-person img{width:38px;height:38px;border-radius:50%;object-fit:cover;filter:sepia(.1);}
+.review-name{font-family:'Space Grotesk',sans-serif;font-size:12.5px;letter-spacing:.03em;}
+.review-loc{font-size:12px;color:var(--charcoal-45);}
+
+/* ---------- INSTAGRAM ---------- */
+.insta{padding:0 0 130px;}
+.insta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;}
+@media(max-width:800px){.insta-grid{grid-template-columns:repeat(3,1fr);}}
+.insta-item{position:relative;aspect-ratio:1/1;overflow:hidden;}
+.insta-item img{width:100%;height:100%;object-fit:cover;filter:sepia(.14) saturate(1.05);transition:transform .6s var(--ease);}
+.insta-item:hover img{transform:scale(1.08);}
+.insta-item .cap{
+  position:absolute;left:10px;bottom:9px;color:var(--paper);
+  font-family:'Space Grotesk',sans-serif;font-size:10.5px;
+  opacity:0;transition:opacity .3s var(--ease);text-shadow:0 1px 6px rgba(0,0,0,.5);
+}
+.insta-item:hover .cap{opacity:1;}
+.insta-follow{text-align:center;margin-top:44px;}
+
+/* ---------- NEWSLETTER ---------- */
+.newsletter{background:var(--olive-dark);color:var(--paper);padding:100px 0;text-align:center;}
+.newsletter-title{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(28px,4vw,42px);margin-bottom:30px;}
+.newsletter-form{display:flex;max-width:420px;margin:0 auto;border-bottom:1px solid rgba(251,248,242,.4);}
+.newsletter-form input{
+  flex:1;background:none;border:none;color:var(--paper);font-size:15px;padding:14px 4px;font-family:'Inter',sans-serif;
+}
+.newsletter-form input::placeholder{color:rgba(251,248,242,.5);}
+.newsletter-form button{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:14px 6px;}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--charcoal);color:var(--cream);padding:80px 0 30px;}
+.footer-top{display:flex;justify-content:space-between;gap:50px;flex-wrap:wrap;padding-bottom:60px;border-bottom:1px solid rgba(242,236,225,.14);}
+.footer-brand .nav-logo{color:var(--paper);}
+.footer-tag{color:rgba(242,236,225,.55);font-size:13.5px;margin-top:12px;max-width:220px;}
+.footer-cols{display:flex;gap:64px;flex-wrap:wrap;}
+.footer-col h5{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(242,236,225,.5);margin-bottom:16px;}
+.footer-col a{display:block;font-size:14px;margin-bottom:11px;color:rgba(242,236,225,.85);}
+.footer-col a:hover{color:var(--paper);text-decoration:underline;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;flex-wrap:wrap;gap:14px;}
+.footer-social{display:flex;gap:16px;}
+.footer-social a{font-size:13px;color:rgba(242,236,225,.6);}
+.footer-copy{font-size:12.5px;color:rgba(242,236,225,.4);}
+
+/* ---------- CART DRAWER ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(36,32,24,.45);z-index:1999;
+  opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
+}
+.overlay.open{opacity:1;pointer-events:auto;}
+.cart-drawer{
+  position:fixed;top:0;right:0;bottom:0;width:420px;max-width:92vw;
+  background:var(--paper);z-index:2000;
+  transform:translateX(100%);transition:transform .5s var(--ease);
+  display:flex;flex-direction:column;
+}
+.cart-drawer.open{transform:translateX(0);}
+.cart-head{display:flex;justify-content:space-between;align-items:center;padding:26px 28px;border-bottom:1px solid var(--line);}
+.cart-head h3{font-family:'Fraunces',serif;font-size:20px;}
+.cart-close{font-size:22px;line-height:1;}
+.cart-progress-wrap{padding:18px 28px;border-bottom:1px solid var(--line);}
+.cart-progress-text{font-size:12.5px;color:var(--charcoal-70);margin-bottom:10px;}
+.cart-progress-bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden;}
+.cart-progress-fill{height:100%;background:var(--olive);width:40%;transition:width .5s var(--ease);}
+.cart-items{flex:1;overflow-y:auto;padding:10px 28px;}
+.cart-item{display:flex;gap:14px;padding:20px 0;border-bottom:1px solid var(--line);}
+.cart-item img{width:76px;height:92px;object-fit:cover;border-radius:2px;filter:sepia(.12);}
+.cart-item-info{flex:1;display:flex;flex-direction:column;justify-content:space-between;}
+.cart-item-top{display:flex;justify-content:space-between;gap:10px;}
+.cart-item-name{font-family:'Fraunces',serif;font-size:15px;}
+.cart-item-color{font-size:12px;color:var(--charcoal-45);margin-top:3px;}
+.cart-item-remove{font-size:12px;color:var(--charcoal-45);text-decoration:underline;align-self:flex-start;}
+.qty-control{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:20px;padding:4px 12px;width:fit-content;}
+.qty-control button{font-size:14px;}
+.cart-foot{padding:24px 28px 30px;border-top:1px solid var(--line);}
+.cart-subtotal{display:flex;justify-content:space-between;font-family:'Space Grotesk',sans-serif;font-size:15px;margin-bottom:18px;}
+.cart-checkout{width:100%;}
+
+/* ---------- misc ---------- */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+.fade-up.in{opacity:1;transform:translateY(0);}
+.toast{
+  position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--charcoal);color:var(--paper);
+  font-family:'Space Grotesk',sans-serif;font-size:12.5px;letter-spacing:.05em;
+  padding:14px 24px;border-radius:30px;z-index:3000;
+  opacity:0;pointer-events:none;transition:all .4s var(--ease);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">CARRY.</div>
+  <div class="nav-center">
+    <a href="#shop">Shop</a>
+    <a href="#bestsellers">Best Sellers</a>
+    <a href="#campus-edit">Campus Edit</a>
+    <a href="#about">About</a>
+    <a href="#journal">Journal</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-icon-btn" aria-label="Search">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-icon-btn" aria-label="Account">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+    </button>
+    <button class="nav-icon-btn" id="cartBtn" aria-label="Cart">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <span class="cart-count" id="cartCount">2</span>
+    </button>
+    <div class="mobile-toggle"><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-tag">SS26 CAMPUS COLLECTION — INDIA</div>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow hero-eyebrow">Carry your everyday</div>
+      <h1 class="hero-title">Your whole college life. In one bag.</h1>
+      <p class="hero-sub">Designed for lectures, libraries, cafés, late-night study sessions and everything in between.</p>
+      <div class="hero-ctas">
+        <a href="#shop" class="btn btn-solid">Shop Totes</a>
+        <a href="#campus-edit" class="btn btn-outline">Explore the Collection</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>FREE SHIPPING OVER ₹1,499</span><span>·</span>
+    <span>HEAVYWEIGHT CANVAS</span><span>·</span>
+    <span>FITS A 15" LAPTOP</span><span>·</span>
+    <span>MADE FOR CAMPUS</span><span>·</span>
+    <span>FREE SHIPPING OVER ₹1,499</span><span>·</span>
+    <span>HEAVYWEIGHT CANVAS</span><span>·</span>
+    <span>FITS A 15" LAPTOP</span><span>·</span>
+    <span>MADE FOR CAMPUS</span><span>·</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section" id="shop">
+  <div class="wrap">
+    <div class="section-head fade-up">
+      <h2 class="section-title">Built for<br>campus.</h2>
+      <p class="section-desc">Five totes, one job: carrying everything your day throws at you — without falling apart by midterms.</p>
+    </div>
+  </div>
+  <div class="wrap" id="bestsellers">
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+</section>
+
+<!-- EDITORIAL / LIFESTYLE -->
+<section class="editorial">
+  <div class="wrap">
+    <div class="eyebrow">A day in the bag</div>
+    <h2 class="section-title fade-up">Made for the 9–5.<br>And the 5–9.</h2>
+    <div class="ed-grid">
+      <div class="ed-item ed-a"><img src="images/product-dowhatyoulove.jpg" loading="lazy"><span class="cap">Golden hour, poolside</span></div>
+      <div class="ed-item ed-b"><img src="images/product-staysimple.jpg" loading="lazy"><span class="cap">Library desk, 2pm</span></div>
+      <div class="ed-item ed-c"><img src="images/product-ownsugar.jpg" loading="lazy"><span class="cap">Stairs, between classes</span></div>
+      <div class="ed-item ed-d"><img src="images/bag-open-flatlay-cutout.png" loading="lazy"><span class="cap">Books &amp; headphones inside</span></div>
+      <div class="ed-item ed-e"><img src="images/bag-collage.jpg" loading="lazy"><span class="cap">Everything it carries</span></div>
+      <div class="ed-item ed-f"><img src="images/product-stargirl.jpg" loading="lazy"><span class="cap">Hung on the chair, lecture hall</span></div>
+      <div class="ed-item ed-g"><img src="images/product-spidey.jpg" loading="lazy"><span class="cap">Doodled between classes</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="wrap">
+    <div class="feature-grid">
+      <div class="fade-up">
+        <div class="feature-num">01 — Fits your day</div>
+        <div class="feature-title">Fits your day</div>
+        <p class="feature-text">Roomy enough for your laptop, books, charger, bottle and everything you forgot you packed.</p>
+      </div>
+      <div class="fade-up">
+        <div class="feature-num">02 — Made to last</div>
+        <div class="feature-title">Made to last</div>
+        <p class="feature-text">Heavyweight canvas, reinforced handles and everyday durability that survives every semester.</p>
+      </div>
+      <div class="fade-up">
+        <div class="feature-num">03 — Looks better with time</div>
+        <div class="feature-title">Looks better with time</div>
+        <p class="feature-text">Designed to develop that worn-in character instead of looking worse after a semester.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="inside">
+  <div class="wrap inside-inner">
+    <div class="eyebrow">What's inside?</div>
+    <h2 class="inside-title fade-up">"Yes, it actually fits all of this."</h2>
+    <div class="inside-stage">
+      <img class="bag-photo" src="images/bag-open-flatlay-cutout.png" alt="Open CARRY tote with everyday items">
+      <div class="inside-item i1"><img src="images/bag-collage.jpg"><span>Laptop</span></div>
+      <div class="inside-item i2"><img src="images/bag-notebook.jpg"><span>Notebook</span></div>
+      <div class="inside-item i3"><img src="images/bag-bottle-steel.jpg"><span>Water Bottle</span></div>
+      <div class="inside-item i4"><img src="images/bag-collage.jpg"><span>Earphones</span></div>
+      <div class="inside-item i5"><img src="images/bag-wallet.jpg"><span>Wallet</span></div>
+      <div class="inside-item i6"><img src="images/bag-sunglasses-bottle2.jpg"><span>Sunglasses</span></div>
+      <div class="inside-item i7"><img src="images/bag-pens.jpg"><span>Pen</span></div>
+      <div class="inside-item i8"><img src="images/bag-collegeid.jpg"><span>College ID</span></div>
+    </div>
+    <div class="inside-items-mobile">
+      <div class="inside-item"><img src="images/bag-collage.jpg"><span>Laptop</span></div>
+      <div class="inside-item"><img src="images/bag-notebook.jpg"><span>Notebook</span></div>
+      <div class="inside-item"><img src="images/bag-bottle-steel.jpg"><span>Bottle</span></div>
+      <div class="inside-item"><img src="images/bag-collage.jpg"><span>Earphones</span></div>
+      <div class="inside-item"><img src="images/bag-wallet.jpg"><span>Wallet</span></div>
+      <div class="inside-item"><img src="images/bag-sunglasses-bottle2.jpg"><span>Sunglasses</span></div>
+      <div class="inside-item"><img src="images/bag-pens.jpg"><span>Pen</span></div>
+      <div class="inside-item"><img src="images/bag-collegeid.jpg"><span>College ID</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAMPUS EDIT -->
+<section class="section" id="campus-edit">
+  <div class="wrap">
+    <div class="section-head fade-up">
+      <h2 class="section-title">The Campus<br>Edit.</h2>
+      <div class="edit-tabs">
+        <button class="edit-tab active" data-tab="0">Library Run</button>
+        <button class="edit-tab" data-tab="1">8AM Lecture</button>
+        <button class="edit-tab" data-tab="2">Café After Class</button>
+      </div>
+    </div>
+    <div class="edit-grid">
+      <div class="edit-look">
+        <img src="images/product-staysimple.jpg" loading="lazy">
+        <div class="edit-look-cap">
+          <div class="edit-look-name">The Library Run</div>
+          <div class="edit-look-items">Tote + oversized sweatshirt + jeans + sneakers</div>
+        </div>
+      </div>
+      <div class="edit-look">
+        <img src="images/product-stargirl.jpg" loading="lazy">
+        <div class="edit-look-cap">
+          <div class="edit-look-name">The 8AM Lecture</div>
+          <div class="edit-look-items">Tote + hoodie + cargos + sneakers</div>
+        </div>
+      </div>
+      <div class="edit-look">
+        <img src="images/product-ownsugar.jpg" loading="lazy">
+        <div class="edit-look-cap">
+          <div class="edit-look-name">The Café After Class</div>
+          <div class="edit-look-items">Tote + relaxed shirt + wide-leg trousers + headphones</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="about">
+  <div class="wrap">
+    <div class="section-head fade-up">
+      <h2 class="section-title">From the<br>students.</h2>
+    </div>
+    <div class="review-grid">
+      <div class="review-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p class="review-quote">"My laptop, two notebooks, water bottle and somehow still room for snacks. Best college purchase I've made."</p>
+        <div class="review-person">
+          <img src="https://picsum.photos/seed/riyaface/100/100">
+          <div><div class="review-name">Riya</div><div class="review-loc">Kolkata</div></div>
+        </div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p class="review-quote">"Two semesters in and the canvas just looks better. Handles haven't budged either."</p>
+        <div class="review-person">
+          <img src="https://picsum.photos/seed/arjunface/100/100">
+          <div><div class="review-name">Arjun</div><div class="review-loc">Pune</div></div>
+        </div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p class="review-quote">"Switched from a backpack and my back thanks me. Fits my 15" laptop with room to spare."</p>
+        <div class="review-person">
+          <img src="https://picsum.photos/seed/mishkaface/100/100">
+          <div><div class="review-name">Mishka</div><div class="review-loc">Delhi</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="insta" id="journal">
+  <div class="wrap">
+    <div class="section-head fade-up">
+      <h2 class="section-title">Seen around<br>campus.</h2>
+    </div>
+  </div>
+  <div class="insta-grid">
+    <div class="insta-item"><img src="images/product-dowhatyoulove.jpg"><span class="cap">@riya.jpg</span></div>
+    <div class="insta-item"><img src="images/product-stargirl.jpg"><span class="cap">@arjunframes</span></div>
+    <div class="insta-item"><img src="images/product-spidey.jpg"><span class="cap">@mishkacreates</span></div>
+    <div class="insta-item"><img src="images/product-staysimple.jpg"><span class="cap">@dev.on.campus</span></div>
+    <div class="insta-item"><img src="images/product-ownsugar.jpg"><span class="cap">@ananya.k</span></div>
+    <div class="insta-item"><img src="images/bag-open-flatlay-cutout.png"><span class="cap">@rohan.study</span></div>
+  </div>
+  <div class="wrap insta-follow">
+    <a href="#" class="btn btn-dark">Follow @CARRY</a>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="wrap">
+    <h3 class="newsletter-title">Good things worth carrying.</h3>
+    <form class="newsletter-form" onsubmit="event.preventDefault();showToast('Subscribed. Welcome to CARRY.');this.reset();">
+      <input type="email" placeholder="Your email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo">CARRY.</div>
+        <p class="footer-tag">Made for campus. Made for everywhere.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Shop</h5>
+          <a href="#">All Totes</a><a href="#">Best Sellers</a><a href="#">Campus Edit</a><a href="#">Gift Cards</a>
+        </div>
+        <div class="footer-col">
+          <h5>About</h5>
+          <a href="#">Our Story</a><a href="#">Materials</a><a href="#">Journal</a><a href="#">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h5>Help</h5>
+          <a href="#">Shipping</a><a href="#">Returns</a><a href="#">Contact</a><a href="#">FAQ</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 CARRY. All rights reserved.</div>
+      <div class="footer-social">
+        <a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">TikTok</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Your Bag</h3>
+    <button class="cart-close" id="cartClose">&times;</button>
+  </div>
+  <div class="cart-progress-wrap">
+    <div class="cart-progress-text" id="progressText">₹650 away from free shipping</div>
+    <div class="cart-progress-bar"><div class="cart-progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartSubtotal">₹1,698</span></div>
+    <button class="btn btn-dark cart-checkout">Checkout</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const PRODUCTS = [
+  {id:1,name:'The Everyday Tote',color:'Cream',price:799,img1:'images/bag-sunglasses-bottle.jpg',img2:'images/bag-open-flatlay-cutout.png',swatches:['#EAE1D2','#242018','#8A6A4C']},
+  {id:2,name:'The Stargirl Tote',color:'Maroon Print',price:899,img1:'images/product-stargirl.jpg',img2:'images/product-stargirl.jpg',swatches:['#6C7350','#242018','#7C3138']},
+  {id:3,name:'The Stay Simple Tote',color:'Natural',price:849,img1:'images/product-staysimple.jpg',img2:'images/product-staysimple.jpg',swatches:['#8A6A4C','#EAE1D2','#242018']},
+  {id:4,name:'The Own Sugar Tote',color:'Natural',price:899,img1:'images/product-ownsugar.jpg',img2:'images/product-ownsugar.jpg',swatches:['#3D5872','#242018','#8A6A4C']},
+  {id:5,name:'The Spidey Tote',color:'Doodle Print',price:849,img1:'images/product-spidey.jpg',img2:'images/product-spidey.jpg',swatches:['#242018','#7C3138','#EAE1D2']},
+  {id:6,name:'The Do What You Love Tote',color:'Teal Print',price:799,img1:'images/product-dowhatyoulove.jpg',img2:'images/product-dowhatyoulove.jpg',swatches:['#242018','#EAE1D2','#3D5872']},
+];
+
+let cart = [
+  {id:1,name:'The Everyday Tote',color:'Cream',price:799,qty:1,img:'images/bag-sunglasses-bottle.jpg'},
+  {id:2,name:'The Stargirl Tote',color:'Maroon Print',price:899,qty:1,img:'images/product-stargirl.jpg'},
+];
+
+/* ---------------- RENDER PRODUCTS ---------------- */
+const grid = document.getElementById('productGrid');
+grid.innerHTML = PRODUCTS.map(p => `
+  <div class="product-card">
+    <div class="product-media">
+      <img class="img-a" src="${p.img1}" loading="lazy">
+      <img class="img-b" src="${p.img2}" loading="lazy">
+      <button class="wishlist" onclick="event.stopPropagation();this.classList.toggle('active')">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C.4 8 2 4 6 4c2.2 0 3.7 1.2 6 3.5C14.3 5.2 15.8 4 18 4c4 0 5.6 4 4 7.8-2.5 4.6-10 9.2-10 9.2Z"/></svg>
+      </button>
+      <button class="quick-add" onclick="addToCart(${p.id})">Quick Add — ₹${p.price}</button>
+    </div>
+    <div class="product-info">
+      <div class="product-top">
+        <span class="product-name">${p.name} — ${p.color}</span>
+        <span class="product-price">₹${p.price}</span>
+      </div>
+      <div class="swatches">
+        ${p.swatches.map((c,i)=>`<span class="swatch ${i===0?'selected':''}" style="background:${c}" onclick="event.stopPropagation();selectSwatch(this)"></span>`).join('')}
+      </div>
+    </div>
+  </div>
+`).join('');
+
+function selectSwatch(el){
+  el.parentElement.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function addToCart(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  const existing = cart.find(c=>c.id===id);
+  if(existing){ existing.qty++; } else {
+    cart.push({id:p.id,name:p.name,color:p.color,price:p.price,qty:1,img:p.img1});
+  }
+  renderCart();
+  openCart();
+  showToast(`${p.name} added to bag`);
+}
+
+/* ---------------- CART ---------------- */
+const FREE_SHIP = 1499;
+function renderCart(){
+  const itemsEl = document.getElementById('cartItems');
+  itemsEl.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <img src="${item.img}">
+      <div class="cart-item-info">
+        <div class="cart-item-top">
+          <div>
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-color">${item.color}</div>
+          </div>
+          <div class="product-price">₹${item.price * item.qty}</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="qty-control">
+            <button onclick="changeQty(${item.id},-1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${item.id},1)">+</button>
+          </div>
+          <button class="cart-item-remove" onclick="removeItem(${item.id})">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join('') || '<p style="color:var(--charcoal-45);padding:30px 0;text-align:center;">Your bag is empty.</p>';
+
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cartSubtotal').textContent = `₹${subtotal}`;
+  document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+
+  const remaining = Math.max(FREE_SHIP - subtotal, 0);
+  document.getElementById('progressText').textContent = remaining > 0
+    ? `₹${remaining} away from free shipping`
+    : `You've unlocked free shipping ✓`;
+  document.getElementById('progressFill').style.width = `${Math.min(subtotal/FREE_SHIP*100,100)}%`;
+}
+function changeQty(id,delta){
+  const item = cart.find(i=>i.id===id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty<=0) cart = cart.filter(i=>i.id!==id);
+  renderCart();
+}
+function removeItem(id){ cart = cart.filter(i=>i.id!==id); renderCart(); }
+
+const cartDrawer = document.getElementById('cartDrawer');
+const overlay = document.getElementById('overlay');
+function openCart(){ cartDrawer.classList.add('open'); overlay.classList.add('open'); }
+function closeCart(){ cartDrawer.classList.remove('open'); overlay.classList.remove('open'); }
+document.getElementById('cartBtn').addEventListener('click', openCart);
+document.getElementById('cartClose').addEventListener('click', closeCart);
+overlay.addEventListener('click', closeCart);
+renderCart();
+
+/* ---------------- TOAST ---------------- */
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+/* ---------------- NAV SCROLL ---------------- */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', ()=>{
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ---------------- FADE UP ON SCROLL ---------------- */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.15});
+document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+
+/* ---------------- CAMPUS EDIT TABS ---------------- */
+document.querySelectorAll('.edit-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.edit-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const looks = document.querySelectorAll('.edit-look');
+    const idx = parseInt(tab.dataset.tab);
+    looks.forEach((l,i)=>{
+      l.style.order = i===idx ? -1 : i;
+    });
+  });
+});
+</script>
+</body>
+</html>
